@@ -2,6 +2,8 @@
 
 import { connectDB } from "@/app/lib/mongodb";
 import { Task } from "@/app/models/Task";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 type FormState = {
   errors: {
@@ -50,7 +52,22 @@ export async function createTaskServerAction(
 
   // --- Save to DB ---
   await connectDB();
-  await Task.create({ title, description, category, priority });
+  await Task.create({ title, description, category, priority});
+
+  revalidatePath("/"); // this will tell next.js homepage data changed, fetch fresh data again
+
+  redirect("/");
 
   return { errors: {}, success: true };
+}
+
+
+export async function getTasks() {
+  await connectDB();
+
+  const tasks = await Task.find().sort({
+    createdAt: -1,
+  });
+
+  return JSON.parse(JSON.stringify(tasks));
 }
