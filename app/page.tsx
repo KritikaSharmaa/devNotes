@@ -1,5 +1,5 @@
-import { getTasks } from "./actions/taskActions";
 import TaskContainer from "./components/TaskContainer";
+import { getTasks } from "./actions/taskActions";
 
 export default async function Home() {
 

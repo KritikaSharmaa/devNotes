@@ -9,7 +9,7 @@ const taskSchema = new mongoose.Schema({
 
   priority: String, // e.g., "Low", "Medium", "High"
 
-  status: { type: String, default: "pending" }, // e.g., "pending", "in progress", "completed"
+  status: { type: String, default: "not started" }, // e.g., "pending", "in progress", "completed"
 
   createdAt: { type: Date, default: Date.now }
 });

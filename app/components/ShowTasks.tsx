@@ -1,31 +1,33 @@
 import { Task } from "@/app/types/task";
 import { EllipsisVertical } from 'lucide-react';
-import { SquarePen, RefreshCcw, Flag, Trash2 } from 'lucide-react';
+import { SquarePen, Trash2 } from 'lucide-react';
+import { deleteTaskServerAction } from "@/app/actions/taskActions";
+import { useState } from "react";
+import TaskForm from "./TaskForm";
 
 export default function ShowTasks({ filteredTasks }: { filteredTasks: Task[] }) {
-  return <div className="grid grid-cols-3 gap-4 p-10">
+  const [editTaskId, setEditTaskId] = useState<string | null>(null);
+
+  return <div className="grid gap-4 p-10">
     {filteredTasks.map((task) => (
       <div
         key={task._id}
-        className="bg-white rounded-xl shadow p-5"
+        className="bg-white rounded-xl shadow p-5 w-2/5 mx-auto"
       >
         <div className="w-full flex justify-between">
           <h2 className="text-xl font-semibold">
             {task.title}
           </h2>
 
-          {/* <EllipsisVertical size={16} /> */}
           <div className="dropdown dropdown-end">
-            <EllipsisVertical size={16} tabIndex={0} role="button" className="outline-none cursor-pointer"/>
+            <EllipsisVertical size={16} tabIndex={0} role="button" className="outline-none cursor-pointer" />
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-              <li><a className="hover:bg-blue-600 hover:text-white"><SquarePen size={16}/>Edit task</a></li>
-              <li><a className="hover:bg-blue-600 hover:text-white"><RefreshCcw size={16}/>Change status</a></li>
-              <li><a className="hover:bg-blue-600 hover:text-white"><Flag size={16}/>Change priority</a></li>
-              <li><a className="hover:bg-blue-600 hover:text-white"><Trash2 size={16}/>Delete task</a></li>
+              <li onClick={() => setEditTaskId(task._id)}><a className="hover:bg-blue-600 hover:text-white"><SquarePen size={16} />Edit task</a></li>
+              <li onClick={() => deleteTaskServerAction(task._id)}><a className="hover:bg-blue-600 hover:text-white"><Trash2 size={16} />Delete task</a></li>
             </ul>
           </div>
-        </div> 
- 
+        </div>
+
         <p className="text-gray-600 mt-2">
           {task.description}
         </p>
@@ -43,6 +45,12 @@ export default function ShowTasks({ filteredTasks }: { filteredTasks: Task[] }) 
             {task.status}
           </span>
         </div>
+        {editTaskId == task._id &&
+          <div className="">
+            <hr className="my-4 border-gray-200" />
+            <TaskForm task={task} onEditSuccess={() => setEditTaskId(null)} />
+          </div>
+        }
       </div>
     ))}
 
