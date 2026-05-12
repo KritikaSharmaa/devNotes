@@ -3,9 +3,7 @@ import TaskContainer from "./components/TaskContainer";
 
 export default async function Home() {
 
-
   const tasks = await getTasks();
-
 
   return <div>
     <h1 className="text-4xl font-bold text-center mt-20 text-gray-800 dark:text-white">

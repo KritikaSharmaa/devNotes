@@ -27,12 +27,12 @@ export default function SearchBar({search, setSearch}: SearchBarProps) {
       </div>
 
       {/* Filter Icon Button */}
-      <button
+      {/* <button
         type="button"
         className="flex items-center justify-center rounded-xl border border-gray-300 bg-white p-2.5 shadow-sm hover:bg-gray-100 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
       >
         <Filter size={20} className="text-gray-600" />
-      </button>
+      </button> */}
     </div>
   );
 }

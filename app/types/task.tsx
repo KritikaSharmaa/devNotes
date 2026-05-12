@@ -5,6 +5,6 @@ export type Task = {
   description: string;
   category: string;
   priority: "low" | "medium" | "high";
-  completed: boolean;
+  status: string;
   createdAt: Date;
 };
